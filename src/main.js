@@ -5,7 +5,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { fetchImages } from "./js/pixabay-api";
 import { renderImages } from "./js/render-functions";
-import simpleLightbox from "simplelightbox";
+
 
 
 const form = document.querySelector('.form');
@@ -19,7 +19,7 @@ form.addEventListener('submit', (event) => {
     if(inputValue === '') {
         iziToast.error({
             title: '',
-            message: 'Sorry, there are no images matching your search query. Please try again!',
+            message: 'Query is invalid! Please enter search parameters!',
             position: 'topRight'
         });
         return;
@@ -50,7 +50,12 @@ form.addEventListener('submit', (event) => {
         }
     })
     .catch(error => {
-        console.log(error);
+        console.error('Error fetching images', error);
+        iziToast.error({
+            title: '',
+            message: 'Sorry, something went wrong. Please try again!',
+            position: 'topRight',
+        });
     })
     .finally(() => {
         hideLoader();
